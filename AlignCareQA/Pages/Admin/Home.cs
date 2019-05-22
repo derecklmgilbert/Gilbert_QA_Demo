@@ -16,5 +16,9 @@ namespace AlignCareQA.Pages.Admin
         {
             driver.FindElement(By.XPath(tblCustomersXpath + @"/tbody/tr/td[text()='" + CustomerName + @"']/../td[4]")).Click();
         }
+        public static void ClickSelectCustomerFromTable(string CustomerName)
+        {
+            driver.FindElement(By.XPath(tblCustomersXpath + @"/tbody/tr/td[text()='" + CustomerName + @"']/../td[6]")).Click();
+        }
     }
 }

@@ -152,6 +152,19 @@ namespace AlignCareQA
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
             Pages.Admin.EditCustomer.TurnOnInNetworkDisplay();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickUpdateCustomerButton();
+            Pages.Admin.EditCustomer.VerifySuccessMessage();
+            Pages.Admin.EditCustomer.ClickBackToListLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.ClickFirstSearchResult();
+            //Pages.Customer.PatientSummary.ClickPolyprescriberLink();
+           // Pages.Customer.PatientSummary.ValidatePrescriberPopupTable();
+            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
         }
 
     }

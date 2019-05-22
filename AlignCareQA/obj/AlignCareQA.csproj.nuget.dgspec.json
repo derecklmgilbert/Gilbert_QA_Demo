@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {}
+    "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {
+    "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+        "projectUniqueName": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
         "projectName": "AlignCareQA",
-        "projectPath": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+        "projectPath": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
         "packagesPath": "C:\\Users\\Dereck\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\obj\\",
+        "outputPath": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -65,6 +65,10 @@
             "RestSharp": {
               "target": "Package",
               "version": "[106.6.9, )"
+            },
+            "Selenium.Support": {
+              "target": "Package",
+              "version": "[3.141.0, )"
             },
             "Selenium.WebDriver": {
               "target": "Package",

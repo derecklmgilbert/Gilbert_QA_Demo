@@ -703,6 +703,18 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "Selenium.Support/3.141.0": {
+        "type": "package",
+        "dependencies": {
+          "Selenium.WebDriver": "3.141.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {}
+        }
+      },
       "Selenium.WebDriver/3.141.0": {
         "type": "package",
         "dependencies": {
@@ -2805,6 +2817,25 @@
         "lib/netstandard1.0/_._",
         "runtime.native.system.4.3.0.nupkg.sha512",
         "runtime.native.system.nuspec"
+      ]
+    },
+    "Selenium.Support/3.141.0": {
+      "sha512": "F4sxMCXGyqWtbw5qsniJRgza2UsBnslHwFgNA2p7hPxvJhqg73lyXu/ZscJ7FSfRvq3eJrosysv92+4sZ3vWsg==",
+      "type": "package",
+      "path": "selenium.support/3.141.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/WebDriver.Support.dll",
+        "lib/net35/WebDriver.Support.xml",
+        "lib/net40/WebDriver.Support.dll",
+        "lib/net40/WebDriver.Support.xml",
+        "lib/net45/WebDriver.Support.dll",
+        "lib/net45/WebDriver.Support.xml",
+        "lib/netstandard2.0/WebDriver.Support.dll",
+        "lib/netstandard2.0/WebDriver.Support.xml",
+        "selenium.support.3.141.0.nupkg.sha512",
+        "selenium.support.nuspec"
       ]
     },
     "Selenium.WebDriver/3.141.0": {
@@ -5872,6 +5903,7 @@
       "NUnit.Console >= 3.10.0",
       "NUnit3TestAdapter >= 3.13.0",
       "RestSharp >= 106.6.9",
+      "Selenium.Support >= 3.141.0",
       "Selenium.WebDriver >= 3.141.0",
       "Selenium.WebDriver.ChromeDriver >= 74.0.3729.6"
     ]
@@ -5883,11 +5915,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+      "projectUniqueName": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
       "projectName": "AlignCareQA",
-      "projectPath": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+      "projectPath": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
       "packagesPath": "C:\\Users\\Dereck\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dereck\\source\\repos\\AlignCareQA\\AlignCareQA\\obj\\",
+      "outputPath": "C:\\Users\\Dereck\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5941,6 +5973,10 @@
           "RestSharp": {
             "target": "Package",
             "version": "[106.6.9, )"
+          },
+          "Selenium.Support": {
+            "target": "Package",
+            "version": "[3.141.0, )"
           },
           "Selenium.WebDriver": {
             "target": "Package",

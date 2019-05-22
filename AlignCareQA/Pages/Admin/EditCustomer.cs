@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,17 +31,53 @@ namespace AlignCareQA.Pages.Admin
         //private static readonly By ckbxModel = By.Name("sso");
         //private static readonly By ckbxNewMember = By.Name("sso");
 
+
         //Elastic Search Index
+        private static readonly By txtIndexName = By.XPath("//input[@ng-model='customer.Customer.ElasticSearchIndex.IndexName']");
+        private static readonly By txtAliasName = By.XPath("//input[@ng-model='customer.Customer.ElasticSearchIndex.AliasName']");
+        private static readonly By txtIndexSettings = By.Name("indexSettings");
+
 
         //Elastic Search Type
 
+        //Common
+        private static readonly By btnNext = By.XPath("//input[@value='Next']");
+        private static readonly By btnPrevious = By.XPath("//input[@value='Previous']");
+        private static readonly By btnUpdateCustomer = By.XPath("//button/span[text()='Update Customer']/..");
+        private static readonly By lnkBackToList = By.LinkText("Back to List");
+        private static readonly By alertSuccessMessage = By.Id("divSuccessMessage");
+        private static readonly By alertErrorMessage = By.Id("divErrorMessage");
+
+
         public static void TurnOnInNetworkDisplay()
         {
-            if(!driver.FindElement(ckbxIsInNetworkDisplay).Selected)
+            System.Threading.Thread.Sleep(500);
+            if (!driver.FindElement(ckbxIsInNetworkDisplay).Selected)
             {
                 driver.FindElement(ckbxIsInNetworkDisplay).Click();
             }
         }
-
+        public static void ClickNextButton()
+        {
+            driver.FindElement(btnNext).Click();
+            System.Threading.Thread.Sleep(500);
+        }
+        public static void ClickPreviousButton()
+        {
+            driver.FindElement(btnPrevious).Click();
+        }
+        public static void ClickUpdateCustomerButton()
+        {
+            driver.FindElement(btnUpdateCustomer).Click();
+        }
+        public static void VerifySuccessMessage()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElement(alertSuccessMessage).Displayed == true);
+            Assert.That(driver.FindElement(alertSuccessMessage).Text, Is.EqualTo("Customer submitted successfully."));
+        }
+        public static void ClickBackToListLink()
+        {
+            driver.FindElement(lnkBackToList).Click();
+        }
     }
 }
