@@ -1,0 +1,14 @@
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.deps.json
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.runtimeconfig.json
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.runtimeconfig.dev.json
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.dll
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.csproj.CoreCompileInputs.cache
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.AssemblyInfoInputs.cache
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.AssemblyInfo.cs
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.pdb
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.dll
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.pdb
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.dll
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.pdb
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\nunit.engine.netstandard.dll
+C:\Users\Dereck\source\repos\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.csprojAssemblyReference.cache
