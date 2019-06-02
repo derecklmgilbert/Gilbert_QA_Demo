@@ -26,3 +26,17 @@ C:\Users\Dereck\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1
 C:\Users\Dereck\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.AssemblyInfo.cs
 C:\Users\Dereck\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.dll
 C:\Users\Dereck\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.pdb
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.csprojAssemblyReference.cache
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.csproj.CoreCompileInputs.cache
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.AssemblyInfoInputs.cache
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.AssemblyInfo.cs
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.dll
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\obj\Debug\netcoreapp2.1\AlignCareQA.pdb
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.dll
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\NUnit3.TestAdapter.pdb
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\nunit.engine.netstandard.dll
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.deps.json
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.runtimeconfig.json
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.runtimeconfig.dev.json
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.dll
+C:\Users\dereck.gilbert\Documents\GitHub\AlignCareQA\AlignCareQA\bin\Debug\netcoreapp2.1\AlignCareQA.pdb

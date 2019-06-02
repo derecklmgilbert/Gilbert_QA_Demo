@@ -60,7 +60,7 @@ namespace AlignCareQA.Pages.Admin
         public static void ClickNextButton()
         {
             driver.FindElement(btnNext).Click();
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(1000);
         }
         public static void ClickPreviousButton()
         {

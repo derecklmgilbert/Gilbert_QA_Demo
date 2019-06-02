@@ -142,9 +142,9 @@ namespace AlignCareQA
         //    allTests.Add(new Results { testKey = singleTest.testKey, start = singleTest.start, finish = singleTest.finish, status = singleTest.status, comment = singleTest.comment, evidences = singleTest.evidences });
         }
 
-        //Safe for Live
+
         [Test]
-        [Category("UAT")]
+        [Category("QA")]
         public void Test()
         {
             Pages.Customer.Login.LoginWithDefault();
@@ -166,6 +166,81 @@ namespace AlignCareQA
            // Pages.Customer.PatientSummary.ValidatePrescriberPopupTable();
             Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
         }
+        [Test]
+        [Category("CreateUser")]
+        public void CreateValidUser()
+        {
+            Data.User user = new Data.User() {username="Test", password= "TESTTEST123", confirmpassword= "TESTTEST123", active=true}; 
+            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.CreateNewUser(user);
 
+        }
+        [Test]
+        [Category("CreateUser")]
+        public void CreateUserPasswordTooShort()
+        {
+            Data.User user = new Data.User() { username = "TestFail", password = "TEST123", confirmpassword = "TEST123", active = true };
+            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.CreateNewUser(user);
+            Pages.Admin.AddUser.ValidatePasswordLengthError();
+
+        }
+        [Test]
+        [Category("CreateUser")]
+        public void CreateUserPasswordTooLong()
+        {
+            Data.User user = new Data.User() { username = "TestFail", password = "TESTTESTTESTTESTTEST123", confirmpassword = "TESTTESTTESTTESTTEST123", active = true };
+            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.CreateNewUser(user);
+            Pages.Admin.AddUser.ValidateInvalidPassword();
+
+        }
+        [Test]
+        [Category("CreateUser")]
+        public void CreateUserPasswordNoNumbers()
+        {
+            Data.User user = new Data.User() { username = "TestFail", password = "TESTTEST", confirmpassword = "TESTTEST", active = true };
+            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.CreateNewUser(user);
+            Pages.Admin.AddUser.ValidateInvalidPassword();
+
+        }
+        [Test]
+        [Category("CreateUser")]
+        public void CreateUserDuplicateUsername()
+        {
+            Data.User user = new Data.User() { username = "TestFail", password = "TESTTEST", confirmpassword = "TESTTEST", active = true };
+            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.CreateNewUser(user);
+            Pages.Admin.AddUser.ValidateInvalidPassword();
+
+        }
+        [Test]
+        [Category("Login")]
+        public void LoginInvalidPassword()
+        {
+            Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
+            Pages.Customer.Login.ValidateInvalidPasswordMessage();
+        }
     }
 }
