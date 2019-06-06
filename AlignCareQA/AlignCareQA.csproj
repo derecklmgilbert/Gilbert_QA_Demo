@@ -15,9 +15,12 @@
     <PackageReference Include="NUnit.Console" Version="3.10.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Include="RestSharp" Version="106.6.9" />
+    <PackageReference Include="Selenium.Firefox.WebDriver" Version="0.24.0" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="74.0.3729.6" />
+    <PackageReference Include="Selenium.WebDriver.GeckoDriver.Win64" Version="0.24.0" />
+    <PackageReference Include="Selenium.WebDriver.MicrosoftDriver" Version="17.17134.0" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +8,7 @@ namespace AlignCareQA.Pages.Customer
 { 
     class MenuBar
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
         private static readonly By lnkMenuDropdown = By.XPath("//*[@menu-item='menu']");
         private static readonly By lnkAdmin = By.XPath("//a/div[contains(@class,'adminmenu')]");
 
@@ -20,6 +20,10 @@ namespace AlignCareQA.Pages.Customer
         public static void ClickAdminLink()
         {
             driver.FindElement(lnkAdmin).Click();
+        }
+        public static void ValidateAdminLinkDoesntExist()
+        {
+            Assert.Zero(driver.FindElements(lnkAdmin).Count);
         }
     }
 }

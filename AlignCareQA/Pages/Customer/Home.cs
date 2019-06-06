@@ -10,7 +10,7 @@ namespace AlignCareQA.Pages.Customer
 {
     class Home
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
 
         private static readonly By btnRiskProfile = By.XPath("//div/h3[text()='Risk Profile']/../div/button");
 

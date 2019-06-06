@@ -10,7 +10,7 @@ namespace AlignCareQA.Pages.Admin
 {
     class EditCustomer
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
 
         //General Info
         private static readonly By txtCustomerId = By.Name("customerId");

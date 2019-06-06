@@ -9,15 +9,27 @@ namespace AlignCareQA.Pages.Customer
 {
     class Login
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
         private static readonly By txtUsername = By.Id("UserName");
         private static readonly By txtPassword = By.Name("Password");
         private static readonly By btnSubmit = By.CssSelector("input[type='Submit']");
         private static readonly By msgError = By.ClassName("validation-summary-errors");
 
-        public static void LoginWithDefault()
+        public static void LoginWithSuperAdmin()
         {
             AttemptLogin("dereck.gilbert@aligncare.com", "HelloW0rld123!");
+        }
+        public static void LoginWithStaffAdmin()
+        {
+            AttemptLogin("AdminStaffTest", "Test12345");
+        }
+        public static void LoginWithClientAdmin()
+        {
+            AttemptLogin("StaticTestAdmin", "DGxy1234!");
+        }
+        public static void LoginWithUser()
+        {
+            AttemptLogin("Test", "TESTTEST123");
         }
         public static void AttemptLogin(string username, string password)
         {
@@ -29,6 +41,18 @@ namespace AlignCareQA.Pages.Customer
         {
             Assert.IsTrue(driver.FindElement(msgError).Displayed);
             Assert.AreEqual("Password is incorrect.", driver.FindElement(msgError).Text);
+
+        }
+        public static void ValidateDormantAccountMessage()
+        {
+            Assert.IsTrue(driver.FindElement(msgError).Displayed);
+            Assert.AreEqual("Your account is not active. Please contact administrator for assistance.", driver.FindElement(msgError).Text);
+
+        }
+        public static void ValidateExpiredAccountMessage()
+        {
+            Assert.IsTrue(driver.FindElement(msgError).Displayed);
+            Assert.AreEqual("Your account is not active. Please contact administrator for assistance.", driver.FindElement(msgError).Text);
 
         }
     }

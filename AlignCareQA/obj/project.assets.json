@@ -703,6 +703,12 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "Selenium.Firefox.WebDriver/0.24.0": {
+        "type": "package",
+        "build": {
+          "build/Selenium.Firefox.WebDriver.targets": {}
+        }
+      },
       "Selenium.Support/3.141.0": {
         "type": "package",
         "dependencies": {
@@ -731,6 +737,18 @@
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
+        }
+      },
+      "Selenium.WebDriver.GeckoDriver.Win64/0.24.0": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.GeckoDriver.Win64.targets": {}
+        }
+      },
+      "Selenium.WebDriver.MicrosoftDriver/17.17134.0": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.MicrosoftDriver.targets": {}
         }
       },
       "System.AppContext/4.1.0": {
@@ -2819,6 +2837,19 @@
         "runtime.native.system.nuspec"
       ]
     },
+    "Selenium.Firefox.WebDriver/0.24.0": {
+      "sha512": "p5lmZwTRYw/ZRM7Qx0QjbaLwWC3q6fpGMhBSDEwspVZw4KJs+hwtcHYy7huEZmBgw1D0QghvcdObyEiz3CH4mg==",
+      "type": "package",
+      "path": "selenium.firefox.webdriver/0.24.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Selenium.Firefox.WebDriver.targets",
+        "driver/geckodriver.exe",
+        "selenium.firefox.webdriver.0.24.0.nupkg.sha512",
+        "selenium.firefox.webdriver.nuspec"
+      ]
+    },
     "Selenium.Support/3.141.0": {
       "sha512": "F4sxMCXGyqWtbw5qsniJRgza2UsBnslHwFgNA2p7hPxvJhqg73lyXu/ZscJ7FSfRvq3eJrosysv92+4sZ3vWsg==",
       "type": "package",
@@ -2870,6 +2901,32 @@
         "driver/win32/chromedriver.exe",
         "selenium.webdriver.chromedriver.74.0.3729.6.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
+      ]
+    },
+    "Selenium.WebDriver.GeckoDriver.Win64/0.24.0": {
+      "sha512": "5KZBCZn8Pow2XDcYJEVrZx3wns5lkYxxvcqmjxXpr9Nc8lGxZduG3W8SQcEeCfG+c4p0YzHxRFcKbOVbT4hNjA==",
+      "type": "package",
+      "path": "selenium.webdriver.geckodriver.win64/0.24.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Selenium.WebDriver.GeckoDriver.Win64.targets",
+        "driver/geckodriver.exe",
+        "selenium.webdriver.geckodriver.win64.0.24.0.nupkg.sha512",
+        "selenium.webdriver.geckodriver.win64.nuspec"
+      ]
+    },
+    "Selenium.WebDriver.MicrosoftDriver/17.17134.0": {
+      "sha512": "22tIqQPNbFqWx32YO9XNKvWOcBu3Y98a+qb98xo3k37TkV/qPz7AbohsfaHBtizQtAqbQ5GHNM7re30uvF+amw==",
+      "type": "package",
+      "path": "selenium.webdriver.microsoftdriver/17.17134.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Selenium.WebDriver.MicrosoftDriver.targets",
+        "driver/MicrosoftWebDriver.exe",
+        "selenium.webdriver.microsoftdriver.17.17134.0.nupkg.sha512",
+        "selenium.webdriver.microsoftdriver.nuspec"
       ]
     },
     "System.AppContext/4.1.0": {
@@ -5903,9 +5960,12 @@
       "NUnit.Console >= 3.10.0",
       "NUnit3TestAdapter >= 3.13.0",
       "RestSharp >= 106.6.9",
+      "Selenium.Firefox.WebDriver >= 0.24.0",
       "Selenium.Support >= 3.141.0",
       "Selenium.WebDriver >= 3.141.0",
-      "Selenium.WebDriver.ChromeDriver >= 74.0.3729.6"
+      "Selenium.WebDriver.ChromeDriver >= 74.0.3729.6",
+      "Selenium.WebDriver.GeckoDriver.Win64 >= 0.24.0",
+      "Selenium.WebDriver.MicrosoftDriver >= 17.17134.0"
     ]
   },
   "packageFolders": {
@@ -5974,6 +6034,10 @@
             "target": "Package",
             "version": "[106.6.9, )"
           },
+          "Selenium.Firefox.WebDriver": {
+            "target": "Package",
+            "version": "[0.24.0, )"
+          },
           "Selenium.Support": {
             "target": "Package",
             "version": "[3.141.0, )"
@@ -5985,6 +6049,14 @@
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
             "version": "[74.0.3729.6, )"
+          },
+          "Selenium.WebDriver.GeckoDriver.Win64": {
+            "target": "Package",
+            "version": "[0.24.0, )"
+          },
+          "Selenium.WebDriver.MicrosoftDriver": {
+            "target": "Package",
+            "version": "[17.17134.0, )"
           }
         },
         "imports": [

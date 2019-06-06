@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -8,15 +9,9 @@ namespace AlignCareQA.Pages.Admin
 {
     class Home
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
 
-        // Header section
-        private static readonly By lnkEditLandingPage = By.LinkText("Edit/Delete Landing Page Items");
-        private static readonly By lnkAddLandingPage = By.LinkText("Add Landing Page Item");
-        private static readonly By lnkManageProperty = By.LinkText("Manage Property");
-        private static readonly By lnkManageCustomers = By.LinkText("Manage Customers");
-        private static readonly By lnkManageSuperAdmin = By.LinkText("Manage SuperAdmin");
-
+        private static readonly By lnkCreateCustomer = By.LinkText("Create Customer");
         //Table management
         private static string tblCustomersXpath = "//table[@id='tblCustomers']";
         private static string colCustomerName = "1";
@@ -38,6 +33,14 @@ namespace AlignCareQA.Pages.Admin
         public static void ClickManageUsersFromTable(string CustomerName)
         {
             driver.FindElement(By.XPath(tblCustomersXpath + @"/tbody/tr/td[text()='" + CustomerName + @"']/../td[" + colManageUsers + "]")).Click();
+        }
+        public static void ClickCreateCustomerLink()
+        {
+            driver.FindElement(lnkCreateCustomer).Click();
+        }
+        public static void ValidateCreateCustomerLinkDoesntExist()
+        {
+            Assert.Zero(driver.FindElements(lnkCreateCustomer).Count);
         }
     }
 }

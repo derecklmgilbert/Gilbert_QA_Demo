@@ -10,7 +10,7 @@ namespace AlignCareQA.Pages.Customer
 {
     class Care
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
         private static readonly By btnPatients = By.Id("tbSearchData");
         private static readonly string tblSearchResultsXpath = "//table[@id='tblBeneficiaryResult']";
         private static readonly By tblSearchResults = By.XPath(tblSearchResultsXpath);

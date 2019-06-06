@@ -11,7 +11,7 @@ namespace AlignCareQA.Pages.Customer
 {
     class PatientSummary
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
 
         private static readonly By divPolyprescriber = By.Id("ps");
         private static readonly By lnkPolyprescriber = By.Id("pa");
@@ -37,6 +37,7 @@ namespace AlignCareQA.Pages.Customer
         public static void ClickViewAllPatientDetailsLink()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElement(lnkViewAllPatientDetails).Displayed == true);
+            System.Threading.Thread.Sleep(1000);
             driver.FindElement(lnkViewAllPatientDetails).Click();
         }
     }

@@ -11,7 +11,7 @@ namespace AlignCareQA.Pages.Admin
 {
     class AddLandingPageItem
     {
-        private static ChromeDriver driver = UITests.driver;
+        private static IWebDriver driver = UITests.driver;
 
 
         private static readonly By ddlModuleType = By.Id("ModuleType");

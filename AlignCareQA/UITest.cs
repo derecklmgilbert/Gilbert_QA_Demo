@@ -16,20 +16,12 @@ namespace AlignCareQA
     [TestFixture]
     public class UITests
     {
-        public static ChromeDriver driver;
+        public static IWebDriver driver;
 
         [OneTimeSetUp]
         public void Init()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var driverService = ChromeDriverService.CreateDefaultService(currentDirectory);
-            driverService.Start();
-            ChromePerformanceLoggingPreferences logs = new ChromePerformanceLoggingPreferences();
-            ChromeOptions options = new ChromeOptions();
-            options.SetLoggingPreference(LogType.Browser, LogLevel.Severe);
-            options.AddArgument("--start-maximized");
-            options.AddArgument("--incognito");
-            driver = new ChromeDriver(driverService, options);
+            driver = Helpers.Browser.GetRandomBrowser();
             System.Threading.Thread.Sleep(5000);
         }
         [SetUp]
@@ -147,7 +139,7 @@ namespace AlignCareQA
         [Category("QA")]
         public void Test()
         {
-            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
@@ -165,13 +157,14 @@ namespace AlignCareQA
             //Pages.Customer.PatientSummary.ClickPolyprescriberLink();
            // Pages.Customer.PatientSummary.ValidatePrescriberPopupTable();
             Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            Pages.Customer.AllPatientDetails.ClickReportButton();
         }
         [Test]
         [Category("CreateUser")]
         public void CreateValidUser()
         {
             Data.User user = new Data.User() {username="Test", password= "TESTTEST123", confirmpassword= "TESTTEST123", active=true}; 
-            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
@@ -180,11 +173,11 @@ namespace AlignCareQA
 
         }
         [Test]
-        [Category("CreateUser")]
+        [Category("CreateUser"), Category("Rerun Safe")]
         public void CreateUserPasswordTooShort()
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TEST123", confirmpassword = "TEST123", active = true };
-            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
@@ -194,11 +187,11 @@ namespace AlignCareQA
 
         }
         [Test]
-        [Category("CreateUser")]
+        [Category("CreateUser"), Category("Rerun Safe")]
         public void CreateUserPasswordTooLong()
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TESTTESTTESTTESTTEST123", confirmpassword = "TESTTESTTESTTESTTEST123", active = true };
-            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
@@ -208,11 +201,11 @@ namespace AlignCareQA
 
         }
         [Test]
-        [Category("CreateUser")]
+        [Category("CreateUser"), Category("Rerun Safe")]
         public void CreateUserPasswordNoNumbers()
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TESTTEST", confirmpassword = "TESTTEST", active = true };
-            Pages.Customer.Login.LoginWithDefault();
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
@@ -222,17 +215,17 @@ namespace AlignCareQA
 
         }
         [Test]
-        [Category("CreateUser")]
+        [Category("CreateUser"), Category("Rerun Safe")]
         public void CreateUserDuplicateUsername()
         {
-            Data.User user = new Data.User() { username = "TestFail", password = "TESTTEST", confirmpassword = "TESTTEST", active = true };
-            Pages.Customer.Login.LoginWithDefault();
+            Data.User user = new Data.User() { username = "Test", password = "TESTTEST123", confirmpassword = "TESTTEST123", active = true };
+            Pages.Customer.Login.LoginWithSuperAdmin();
             Pages.Customer.MenuBar.ExpandMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
             Pages.Admin.AddUser.CreateNewUser(user);
-            Pages.Admin.AddUser.ValidateInvalidPassword();
+            Pages.Admin.AddUser.ValidateDuplicateAccountMessage();
 
         }
         [Test]
@@ -241,6 +234,87 @@ namespace AlignCareQA
         {
             Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
             Pages.Customer.Login.ValidateInvalidPasswordMessage();
+        }
+        [Test]
+        [Category("Login"), Category("Rerun Safe")]
+        public void LoginDormantAccount()
+        {
+            Pages.Customer.Login.AttemptLogin("TestDormant", "TESTTEST123");
+            Pages.Customer.Login.ValidateDormantAccountMessage();
+        }
+        [Test]
+        [Category("Login"), Category("Rerun Safe")]
+        public void LoginExpiredAccount()
+        {
+            Pages.Customer.Login.AttemptLogin("TestExpired", "TESTTEST123");
+            Pages.Customer.Login.ValidateExpiredAccountMessage();
+        }
+        [Test]
+        [Category("Login"), Category("Rerun Safe")]
+        public void Login3FailsLocked()
+        {
+            Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
+            Pages.Customer.Login.ValidateInvalidPasswordMessage();
+        }
+        [Test]
+        [Category("Permissions"), Category("Rerun Safe")]
+        public void ValidateSuperAdminPermissions()
+        {
+            //Create Saved Search for PrescienceRx and Landing Page Category.
+
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickCreateCustomerLink();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.MenuBar.ClickEditLandingPage();
+            Pages.Admin.MenuBar.ClickManageSuperAdmin();
+            Pages.Admin.MenuBar.ClickManageProperty();
+
+        }
+        [Test]
+        [Category("Permissions"), Category("Rerun Safe")]
+        public void ValidateStaffAdminPermissions()
+        {
+            Pages.Customer.Login.LoginWithStaffAdmin();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ValidateCreateCustomerLinkDoesntExist();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.MenuBar.ClickEditLandingPage();
+            Pages.Admin.MenuBar.ValidateManageSuperAdminLinkDoesntExist();
+            Pages.Admin.MenuBar.ValidateManagePropertyLinkDoesntExist();
+
+        }
+        [Test]
+        [Category("Permissions"), Category("Rerun Safe")]
+        public void ValidateClientAdminPermissions()
+        {
+            Pages.Customer.Login.LoginWithClientAdmin();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.ManageUsers.ClickCreateLink();
+            Pages.Admin.AddUser.ClickBackToListLink();
+            Pages.Admin.MenuBar.ValidateAddLandingPageLinkDoesntExist();
+            Pages.Admin.MenuBar.ValidateEditLandingPageLinkDoesntExist();
+            Pages.Admin.MenuBar.ValidateManageCustomersLinkDoesntExist();
+            Pages.Admin.MenuBar.ValidateManagePropertyLinkDoesntExist();
+            Pages.Admin.MenuBar.ValidateManageSuperAdminLinkDoesntExist();
+        }
+        [Test]
+        [Category("Permissions"), Category("Rerun Safe")]
+        public void ValidateUserPermissions()
+        {
+            Pages.Customer.Login.LoginWithUser();
+            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ValidateAdminLinkDoesntExist();
+
         }
     }
 }

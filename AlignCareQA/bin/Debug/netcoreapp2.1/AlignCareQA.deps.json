@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "56c29c22653ee3d6a44978c49955b9c80ac3e116"
+    "signature": "51f7cf3fd91075d93d206083cbb06f73d2d56b24"
   },
   "compilationOptions": {},
   "targets": {
@@ -13,9 +13,12 @@
           "NUnit.Console": "3.10.0",
           "NUnit3TestAdapter": "3.13.0",
           "RestSharp": "106.6.9",
+          "Selenium.Firefox.WebDriver": "0.24.0",
           "Selenium.Support": "3.141.0",
           "Selenium.WebDriver": "3.141.0",
-          "Selenium.WebDriver.ChromeDriver": "74.0.3729.6"
+          "Selenium.WebDriver.ChromeDriver": "74.0.3729.6",
+          "Selenium.WebDriver.GeckoDriver.Win64": "0.24.0",
+          "Selenium.WebDriver.MicrosoftDriver": "17.17134.0"
         },
         "runtime": {
           "AlignCareQA.dll": {}
@@ -452,6 +455,7 @@
         }
       },
       "runtime.native.System/4.3.0": {},
+      "Selenium.Firefox.WebDriver/0.24.0": {},
       "Selenium.Support/3.141.0": {
         "dependencies": {
           "Selenium.WebDriver": "3.141.0"
@@ -475,6 +479,8 @@
         }
       },
       "Selenium.WebDriver.ChromeDriver/74.0.3729.6": {},
+      "Selenium.WebDriver.GeckoDriver.Win64/0.24.0": {},
+      "Selenium.WebDriver.MicrosoftDriver/17.17134.0": {},
       "System.AppContext/4.1.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -1219,6 +1225,13 @@
       "path": "runtime.native.system/4.3.0",
       "hashPath": "runtime.native.system.4.3.0.nupkg.sha512"
     },
+    "Selenium.Firefox.WebDriver/0.24.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-p5lmZwTRYw/ZRM7Qx0QjbaLwWC3q6fpGMhBSDEwspVZw4KJs+hwtcHYy7huEZmBgw1D0QghvcdObyEiz3CH4mg==",
+      "path": "selenium.firefox.webdriver/0.24.0",
+      "hashPath": "selenium.firefox.webdriver.0.24.0.nupkg.sha512"
+    },
     "Selenium.Support/3.141.0": {
       "type": "package",
       "serviceable": true,
@@ -1239,6 +1252,20 @@
       "sha512": "sha512-C9dfVytnfhzQH49+TZHAuyZZmoRPTv/SrvL2sdOnnEjucMJJuvsp7/hudFQYfYTmjgBLq8znwmvMIm5ZbTZ62Q==",
       "path": "selenium.webdriver.chromedriver/74.0.3729.6",
       "hashPath": "selenium.webdriver.chromedriver.74.0.3729.6.nupkg.sha512"
+    },
+    "Selenium.WebDriver.GeckoDriver.Win64/0.24.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5KZBCZn8Pow2XDcYJEVrZx3wns5lkYxxvcqmjxXpr9Nc8lGxZduG3W8SQcEeCfG+c4p0YzHxRFcKbOVbT4hNjA==",
+      "path": "selenium.webdriver.geckodriver.win64/0.24.0",
+      "hashPath": "selenium.webdriver.geckodriver.win64.0.24.0.nupkg.sha512"
+    },
+    "Selenium.WebDriver.MicrosoftDriver/17.17134.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-22tIqQPNbFqWx32YO9XNKvWOcBu3Y98a+qb98xo3k37TkV/qPz7AbohsfaHBtizQtAqbQ5GHNM7re30uvF+amw==",
+      "path": "selenium.webdriver.microsoftdriver/17.17134.0",
+      "hashPath": "selenium.webdriver.microsoftdriver.17.17134.0.nupkg.sha512"
     },
     "System.AppContext/4.1.0": {
       "type": "package",
