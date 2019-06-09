@@ -32,14 +32,14 @@ namespace AlignCareQA.Pages.Customer
         private static readonly By lblAgeData = By.XPath("//div[@id='patientProfile']//td[text()='Age']/../td[2]");
         private static readonly By lblAgeGroupData = By.XPath("//div[@id='patientProfile']//td[text()='Age Group']/../td[2]");
         private static readonly By lblCOAData = By.XPath("//div[@id='patientProfile']//td[text()='COA']/../td[2]");
-        private static readonly By lblZipCodeData = By.XPath("//div[@id='patientProfile']//td[text()='Zip  Code']/../td[2]");
+        private static readonly By lblZipCodeData = By.XPath("//div[@id='patientProfile']//td[text()='Zip Code']/../td[2]");
 
         private static readonly By lblPCPNameData = By.XPath("//div[@id='patientProfile']//td[text()='PCP Name']/../td[2]");
         private static readonly By lblPCPNPIData= By.XPath("//div[@id='patientProfile']//td[text()='PCP NPI']/../td[2]");
         private static readonly By lblPCPSpecialtyData = By.XPath("//div[@id='patientProfile']//td[text()='PCP Specialty']/../td[2]");
         private static readonly By lblPhysicianNameData = By.XPath("//div[@id='patientProfile']//td[text()='Physician Name']/../td[2]");
         private static readonly By lblNPIData = By.XPath("//div[@id='patientProfile']//td[text()='NPI']/../td[2]");
-        private static readonly By lblNetworkParticipantData = By.XPath("//div[@id='patientProfile']//td[text()='NetWork Participant']/../td[2]");
+        private static readonly By lblNetworkParticipantData = By.XPath("//div[@id='patientProfile']//td[text()='Network Participant']/../td[2]");
         private static readonly By lblSpecialtyData = By.XPath("//div[@id='patientProfile']//td[text()='Specialty']/../td[2]");
 
         private static readonly By lblRegionData = By.XPath("//div[@id='patientProfile']//td[text()='Region']/../td[2]");
@@ -56,11 +56,62 @@ namespace AlignCareQA.Pages.Customer
         private static readonly By lblOptionalCoverageData = By.XPath("//div[@id='patientProfile']//td[text()='Optional Coverage']/../td[2]");
         private static readonly By lblPainManagementData = By.XPath("//div[@id='patientProfile']//td[text()='Pain Management']/../td[2]");
 
+        //Prescriber Section
+        private static readonly string tblPrescriberXpath = "//div[@id='prescriber']//table";
+
+        //Prescribing Section
+        private static readonly By chrtPrescribers = By.Id("DifferentPrescriberChart");
+
+        //Drug Consumption Detail Section
+        private static readonly string drugXpath = "//div[contains(text(), 'Drug Consumption Detail')]/../div/div[@class='ng-scope']";
         public static void ClickReportButton()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(btnReport).Displayed);
             driver.FindElement(btnReport).Click();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(ddlFormat).Displayed);
+        }
+        public static void ClickOkToGenerateReport()
+        {
+            driver.FindElement(btnModalOk).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(60)).Until(x => !x.FindElement(btnModalOk).Displayed);
+        }
+        public static void ValidateInNetworkIsHidden()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElements(lblOptionalCoverageData).Count > 0);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(lblOptionalCoverageData).Displayed);
+            Assert.Zero(driver.FindElements(lblNetworkParticipantData).Count);
+            Assert.False(PrescriberTableNetworkColumnDisplayed());
+            Assert.Zero(driver.FindElements(chrtPrescribers).Count);
+            CheckDrugConsumptionPrescriptionTablesForInNetwork(false);
+        }
+        public static void ValidateInNetworkIsDisplayed()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElements(lblOptionalCoverageData).Count > 0);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(lblOptionalCoverageData).Displayed);
+            Assert.NotZero(driver.FindElements(lblNetworkParticipantData).Count);
+            Assert.True(PrescriberTableNetworkColumnDisplayed());
+            Assert.NotZero(driver.FindElements(chrtPrescribers).Count);
+            CheckDrugConsumptionPrescriptionTablesForInNetwork(true);
+        }
+        private static bool PrescriberTableNetworkColumnDisplayed()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(By.XPath(tblPrescriberXpath)).Displayed);
+            return driver.FindElement(By.XPath(tblPrescriberXpath + "/tbody/tr/th[text()='In Network']")).Displayed;
+        }
+        private static void CheckDrugConsumptionPrescriptionTablesForInNetwork(bool expectedDisplayed)
+        {
+            int drugCount = driver.FindElements(By.XPath(drugXpath + "/div[@class='ng-scope']")).Count;
+            for(int i =0; i<drugCount; i++)
+            {
+                driver.FindElements(By.XPath("//div[contains(text(),'Prescription History')]/.."))[i].Click();
+                System.Threading.Thread.Sleep(1000);
+            }
+
+            for (int i = 0; i < drugCount; i++)
+            {
+                Assert.True(driver.FindElements(By.XPath("//table[@id='tblPrescriptionHistory']"))[i].Displayed);
+                Assert.AreEqual(driver.FindElements(By.XPath("//table[@id='tblPrescriptionHistory']"))[i].FindElement(By.XPath(".//th[text()='In Network']")).Displayed, expectedDisplayed);
+            }
         }
     }
 }

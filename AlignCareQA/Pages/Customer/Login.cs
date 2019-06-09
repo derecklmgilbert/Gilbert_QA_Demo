@@ -33,27 +33,30 @@ namespace AlignCareQA.Pages.Customer
         }
         public static void AttemptLogin(string username, string password)
         {
+            driver.FindElement(txtUsername).Clear();
             driver.FindElement(txtUsername).SendKeys(username);
             driver.FindElement(txtPassword).SendKeys(password);
             driver.FindElement(btnSubmit).Click();
         }
-        public static void ValidateInvalidPasswordMessage()
+        public static void ValidateInvalidPasswordMessage(string contactEmail)
         {
             Assert.IsTrue(driver.FindElement(msgError).Displayed);
-            Assert.AreEqual("Password is incorrect.", driver.FindElement(msgError).Text);
-
+            Assert.AreEqual("Invalid User Name or Password. If you have forgotten your credentials please contact " + contactEmail, driver.FindElement(msgError).Text);
         }
-        public static void ValidateDormantAccountMessage()
+        public static void ValidateDormantAccountMessage(string contactName, string contactPhone, string contactEmail)
         {
             Assert.IsTrue(driver.FindElement(msgError).Displayed);
-            Assert.AreEqual("Your account is not active. Please contact administrator for assistance.", driver.FindElement(msgError).Text);
-
+            Assert.AreEqual("Your Account is dormant due to inactivity please contact " + contactName + " , " + contactPhone + " " + contactEmail + "", driver.FindElement(msgError).Text);
         }
-        public static void ValidateExpiredAccountMessage()
+        public static void ValidateExpiredAccountMessage(string contactName, string contactPhone, string contactEmail)
         {
             Assert.IsTrue(driver.FindElement(msgError).Displayed);
-            Assert.AreEqual("Your account is not active. Please contact administrator for assistance.", driver.FindElement(msgError).Text);
-
+            Assert.AreEqual("Your Account has expired please contact " + contactName + " , " + contactPhone + " " + contactEmail + "", driver.FindElement(msgError).Text);
+        }
+        public static void ValidateLockedAccountMessage(string contactName, string contactPhone, string contactEmail)
+        {
+            Assert.IsTrue(driver.FindElement(msgError).Displayed);
+            Assert.AreEqual("Your account has been locked Please Contact " + contactName + ", " + contactPhone + ", " + contactEmail + ".", driver.FindElement(msgError).Text);
         }
     }
 }

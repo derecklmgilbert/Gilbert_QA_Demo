@@ -17,6 +17,8 @@ namespace AlignCareQA.Pages.Admin
         private static readonly By lnkManageProperty = By.LinkText("Manage Property");
         private static readonly By lnkManageCustomers = By.LinkText("Manage Customers");
         private static readonly By lnkManageSuperAdmin = By.LinkText("Manage SuperAdmin");
+        private static readonly By lnkUserMenu = By.XPath("//li[@class='dropdown']/a");
+        private static readonly By lnkSignOut = By.LinkText("Sign Out");
 
         public static void ClickManageCustomers()
         {
@@ -28,7 +30,7 @@ namespace AlignCareQA.Pages.Admin
         }
         public static void ClickEditLandingPage()
         {
-            driver.FindElement(lnkManageCustomers).Click();
+            driver.FindElement(lnkEditLandingPage).Click();
         }
         public static void ClickManageProperty()
         {
@@ -57,6 +59,11 @@ namespace AlignCareQA.Pages.Admin
         public static void ValidateEditLandingPageLinkDoesntExist()
         {
             Assert.Zero(driver.FindElements(lnkEditLandingPage).Count);
+        }
+        public static void SignOut()
+        {
+            driver.FindElement(lnkUserMenu).Click();
+            driver.FindElement(lnkSignOut).Click();
         }
     }
 }

@@ -2,7 +2,16 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "Microsoft.CodeCoverage/16.1.0": {
+      "iTextSharp/5.5.13": {
+        "type": "package",
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
+        }
+      },
+      "Microsoft.CodeCoverage/16.1.1": {
         "type": "package",
         "compile": {
           "lib/netcoreapp1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {}
@@ -96,11 +105,11 @@
           "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {}
         }
       },
-      "Microsoft.NET.Test.Sdk/16.1.0": {
+      "Microsoft.NET.Test.Sdk/16.1.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeCoverage": "16.1.0",
-          "Microsoft.TestPlatform.TestHost": "16.1.0"
+          "Microsoft.CodeCoverage": "16.1.1",
+          "Microsoft.TestPlatform.TestHost": "16.1.1"
         },
         "build": {
           "build/netcoreapp1.0/Microsoft.NET.Test.Sdk.props": {},
@@ -301,7 +310,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.TestPlatform.ObjectModel/16.1.0": {
+      "Microsoft.TestPlatform.ObjectModel/16.1.1": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -410,11 +419,11 @@
           }
         }
       },
-      "Microsoft.TestPlatform.TestHost/16.1.0": {
+      "Microsoft.TestPlatform.TestHost/16.1.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyModel": "1.0.3",
-          "Microsoft.TestPlatform.ObjectModel": "16.1.0",
+          "Microsoft.TestPlatform.ObjectModel": "16.1.1",
           "Newtonsoft.Json": "9.0.1"
         },
         "compile": {
@@ -733,7 +742,7 @@
           "lib/netstandard2.0/WebDriver.dll": {}
         }
       },
-      "Selenium.WebDriver.ChromeDriver/74.0.3729.6": {
+      "Selenium.WebDriver.ChromeDriver/75.0.3770.8": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
@@ -749,6 +758,15 @@
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.MicrosoftDriver.targets": {}
+        }
+      },
+      "Syroot.Windows.IO.KnownFolders/1.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/net452/Syroot.KnownFolders.dll": {}
+        },
+        "runtime": {
+          "lib/net452/Syroot.KnownFolders.dll": {}
         }
       },
       "System.AppContext/4.1.0": {
@@ -1702,10 +1720,25 @@
     }
   },
   "libraries": {
-    "Microsoft.CodeCoverage/16.1.0": {
-      "sha512": "3L0coJd+INnu0E/gPqB9AkAW+mtYDZBoN9R06F54V2N+K5jp0e+IZF07goWx5X05K87qOkVAo/dn+/CG3V1KUA==",
+    "iTextSharp/5.5.13": {
+      "sha512": "MigtmZrqjrJ4QERhgNZc+zhl+XSNV5y3JoH5nNxzdNjPvZJgzYN2qLRQhqtWsF9F/1H28SnOkoS6uIlSduSrXQ==",
       "type": "package",
-      "path": "microsoft.codecoverage/16.1.0",
+      "path": "itextsharp/5.5.13",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "AGPL.txt",
+        "itextsharp.5.5.13.nupkg.sha512",
+        "itextsharp.nuspec",
+        "lib/iTextSharp.xml",
+        "lib/itextsharp.dll",
+        "notice.txt"
+      ]
+    },
+    "Microsoft.CodeCoverage/16.1.1": {
+      "sha512": "PyWoU5QNma20JDmee8s9oT5WuG67ZKYj1q2mNsVKnWM15tjW9aa44nwMEOWsMyrd5+Vhx16VgqcnQ9BozWJCJA==",
+      "type": "package",
+      "path": "microsoft.codecoverage/16.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1734,7 +1767,7 @@
         "build/netstandard1.0/zh-Hant/Microsoft.VisualStudio.TraceDataCollector.resources.dll",
         "lib/net45/Microsoft.VisualStudio.CodeCoverage.Shim.dll",
         "lib/netcoreapp1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll",
-        "microsoft.codecoverage.16.1.0.nupkg.sha512",
+        "microsoft.codecoverage.16.1.1.nupkg.sha512",
         "microsoft.codecoverage.nuspec"
       ]
     },
@@ -1838,10 +1871,10 @@
         "microsoft.extensions.dependencymodel.nuspec"
       ]
     },
-    "Microsoft.NET.Test.Sdk/16.1.0": {
-      "sha512": "iFis0ZiqN/HZMQQ7ya1jSt9AC4YTQUU6k1xFZcxTQsfVi5+eRfnMHGSbg8QHyt0LbbnP77TBBoEDjCKSBUp2yA==",
+    "Microsoft.NET.Test.Sdk/16.1.1": {
+      "sha512": "HypqmcOK2F/PbXFG02xeCj52Fin/9UF9u9IMH5Ohgn0+iEx7vYjBtXg5SkOf/p84golyLY8cO2S1jchem/1dRQ==",
       "type": "package",
-      "path": "microsoft.net.test.sdk/16.1.0",
+      "path": "microsoft.net.test.sdk/16.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1854,7 +1887,7 @@
         "build/netcoreapp1.0/Microsoft.NET.Test.Sdk.targets",
         "build/uap10.0/Microsoft.NET.Test.Sdk.props",
         "buildMultiTargeting/Microsoft.NET.Test.Sdk.props",
-        "microsoft.net.test.sdk.16.1.0.nupkg.sha512",
+        "microsoft.net.test.sdk.16.1.1.nupkg.sha512",
         "microsoft.net.test.sdk.nuspec"
       ]
     },
@@ -2200,10 +2233,10 @@
         "version.txt"
       ]
     },
-    "Microsoft.TestPlatform.ObjectModel/16.1.0": {
-      "sha512": "VytiQu6rxNy3BDhoLDRki8hq1YuM+8Z0NQIfgmL7IhvvNjyWjr3Ru0w68EAaN3K8nG0vIFpLhACXxdd0FfB0Jw==",
+    "Microsoft.TestPlatform.ObjectModel/16.1.1": {
+      "sha512": "BIJqcBBCcDXQw4UHO0xka9JtrnkJCsDKNBaczG2rkHYWpCBCSgA3rr/9xquB9j46PWK1LtrFoRoX/XDRY7KmqQ==",
       "type": "package",
-      "path": "microsoft.testplatform.objectmodel/16.1.0",
+      "path": "microsoft.testplatform.objectmodel/16.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2268,14 +2301,14 @@
         "lib/netstandard1.5/zh-Hans/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
         "lib/netstandard1.5/zh-Hant/Microsoft.TestPlatform.CoreUtilities.resources.dll",
         "lib/netstandard1.5/zh-Hant/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
-        "microsoft.testplatform.objectmodel.16.1.0.nupkg.sha512",
+        "microsoft.testplatform.objectmodel.16.1.1.nupkg.sha512",
         "microsoft.testplatform.objectmodel.nuspec"
       ]
     },
-    "Microsoft.TestPlatform.TestHost/16.1.0": {
-      "sha512": "NArLjTGYkyS6JWx+kSF/uq/g98huVuNBLVnZX1vq5cwhAHXecAbY7IK30JCoCWNCS7EOLS8W5oLRFRi5gieVbQ==",
+    "Microsoft.TestPlatform.TestHost/16.1.1": {
+      "sha512": "F1ftKuNtJ1ADMFYiiRFS4fEJ5pLMiyrmhhErqVpv/QXCxsQvbJw0mUzvZqEx+AkS3GBK+8N3dDGVOJVPQAQ2Hw==",
       "type": "package",
-      "path": "microsoft.testplatform.testhost/16.1.0",
+      "path": "microsoft.testplatform.testhost/16.1.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2415,7 +2448,7 @@
         "lib/uap10.0/Microsoft.TestPlatform.Utilities.dll",
         "lib/uap10.0/Microsoft.VisualStudio.TestPlatform.Common.dll",
         "lib/uap10.0/testhost.dll",
-        "microsoft.testplatform.testhost.16.1.0.nupkg.sha512",
+        "microsoft.testplatform.testhost.16.1.1.nupkg.sha512",
         "microsoft.testplatform.testhost.nuspec"
       ]
     },
@@ -2888,10 +2921,10 @@
         "selenium.webdriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.ChromeDriver/74.0.3729.6": {
-      "sha512": "C9dfVytnfhzQH49+TZHAuyZZmoRPTv/SrvL2sdOnnEjucMJJuvsp7/hudFQYfYTmjgBLq8znwmvMIm5ZbTZ62Q==",
+    "Selenium.WebDriver.ChromeDriver/75.0.3770.8": {
+      "sha512": "AWTEY0489w7poeX+QEnlhA9xdNnzDhbiWTP1hvVeMqvBVB4/YGMspF5Z63I2SBjxXERs3bDookUf5P0UkuXctA==",
       "type": "package",
-      "path": "selenium.webdriver.chromedriver/74.0.3729.6",
+      "path": "selenium.webdriver.chromedriver/75.0.3770.8",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2899,7 +2932,7 @@
         "driver/linux64/chromedriver",
         "driver/mac64/chromedriver",
         "driver/win32/chromedriver.exe",
-        "selenium.webdriver.chromedriver.74.0.3729.6.nupkg.sha512",
+        "selenium.webdriver.chromedriver.75.0.3770.8.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
       ]
     },
@@ -2927,6 +2960,19 @@
         "driver/MicrosoftWebDriver.exe",
         "selenium.webdriver.microsoftdriver.17.17134.0.nupkg.sha512",
         "selenium.webdriver.microsoftdriver.nuspec"
+      ]
+    },
+    "Syroot.Windows.IO.KnownFolders/1.2.1": {
+      "sha512": "4xVaoX2nFc3hAKpCiEmNpG5i9XSkLNUtXcM+3UAKBaGdg1zmCq2CQeHgSC+MGBsUG6WW+qJpCqjVvMhCZX3erw==",
+      "type": "package",
+      "path": "syroot.windows.io.knownfolders/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/Syroot.KnownFolders.dll",
+        "lib/net452/Syroot.KnownFolders.xml",
+        "syroot.windows.io.knownfolders.1.2.1.nupkg.sha512",
+        "syroot.windows.io.knownfolders.nuspec"
       ]
     },
     "System.AppContext/4.1.0": {
@@ -5954,7 +6000,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Microsoft.NET.Test.Sdk >= 16.1.0",
+      "Microsoft.NET.Test.Sdk >= 16.1.1",
       "Microsoft.NETCore.App >= 2.1.0",
       "NUnit >= 3.12.0",
       "NUnit.Console >= 3.10.0",
@@ -5963,9 +6009,11 @@
       "Selenium.Firefox.WebDriver >= 0.24.0",
       "Selenium.Support >= 3.141.0",
       "Selenium.WebDriver >= 3.141.0",
-      "Selenium.WebDriver.ChromeDriver >= 74.0.3729.6",
+      "Selenium.WebDriver.ChromeDriver >= 75.0.3770.8",
       "Selenium.WebDriver.GeckoDriver.Win64 >= 0.24.0",
-      "Selenium.WebDriver.MicrosoftDriver >= 17.17134.0"
+      "Selenium.WebDriver.MicrosoftDriver >= 17.17134.0",
+      "Syroot.Windows.IO.KnownFolders >= 1.2.1",
+      "iTextSharp >= 5.5.13"
     ]
   },
   "packageFolders": {
@@ -6011,7 +6059,7 @@
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
-            "version": "[16.1.0, )"
+            "version": "[16.1.1, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",
@@ -6048,7 +6096,7 @@
           },
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
-            "version": "[74.0.3729.6, )"
+            "version": "[75.0.3770.8, )"
           },
           "Selenium.WebDriver.GeckoDriver.Win64": {
             "target": "Package",
@@ -6057,6 +6105,14 @@
           "Selenium.WebDriver.MicrosoftDriver": {
             "target": "Package",
             "version": "[17.17134.0, )"
+          },
+          "Syroot.Windows.IO.KnownFolders": {
+            "target": "Package",
+            "version": "[1.2.1, )"
+          },
+          "iTextSharp": {
+            "target": "Package",
+            "version": "[5.5.13, )"
           }
         },
         "imports": [
@@ -6066,5 +6122,27 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'iTextSharp 5.5.13' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "iTextSharp",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Syroot.Windows.IO.KnownFolders 1.2.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Syroot.Windows.IO.KnownFolders",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }

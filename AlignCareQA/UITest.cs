@@ -10,6 +10,7 @@ using NUnit.Framework.Interfaces;
 using System.IO;
 using Newtonsoft.Json;
 using RestSharp;
+using Syroot.Windows.IO;
 
 namespace AlignCareQA
 {
@@ -17,7 +18,7 @@ namespace AlignCareQA
     public class UITests
     {
         public static IWebDriver driver;
-
+        private static List<Data.Results> AllResults = new List<Data.Results>();
         [OneTimeSetUp]
         public void Init()
         {
@@ -36,9 +37,9 @@ namespace AlignCareQA
         [OneTimeTearDown]
         public void Cleanup()
         {
-
             driver.Quit();
             driver = null;
+            
 
             //using (StreamWriter file = File.CreateText(@"C:\Users\dereck\Documents\Test\Results.json"))
             //{
@@ -133,39 +134,13 @@ namespace AlignCareQA
         //    //Add test info to full run
         //    allTests.Add(new Results { testKey = singleTest.testKey, start = singleTest.start, finish = singleTest.finish, status = singleTest.status, comment = singleTest.comment, evidences = singleTest.evidences });
         }
-
-
-        [Test]
-        [Category("QA")]
-        public void Test()
-        {
-            Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
-            Pages.Customer.MenuBar.ClickAdminLink();
-            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
-            Pages.Admin.EditCustomer.TurnOnInNetworkDisplay();
-            Pages.Admin.EditCustomer.ClickNextButton();
-            Pages.Admin.EditCustomer.ClickNextButton();
-            Pages.Admin.EditCustomer.ClickUpdateCustomerButton();
-            Pages.Admin.EditCustomer.VerifySuccessMessage();
-            Pages.Admin.EditCustomer.ClickBackToListLink();
-            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
-            Pages.Customer.Home.ExpandRiskProfile();
-            Pages.Customer.Home.ClickRiskProfileSummary();
-            Pages.Customer.Care.ClickPatients();
-            Pages.Customer.Care.ClickFirstSearchResult();
-            //Pages.Customer.PatientSummary.ClickPolyprescriberLink();
-           // Pages.Customer.PatientSummary.ValidatePrescriberPopupTable();
-            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
-            Pages.Customer.AllPatientDetails.ClickReportButton();
-        }
         [Test]
         [Category("CreateUser")]
         public void CreateValidUser()
         {
             Data.User user = new Data.User() {username="Test", password= "TESTTEST123", confirmpassword= "TESTTEST123", active=true}; 
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -178,7 +153,7 @@ namespace AlignCareQA
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TEST123", confirmpassword = "TEST123", active = true };
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -192,7 +167,7 @@ namespace AlignCareQA
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TESTTESTTESTTESTTEST123", confirmpassword = "TESTTESTTESTTESTTEST123", active = true };
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -206,7 +181,7 @@ namespace AlignCareQA
         {
             Data.User user = new Data.User() { username = "TestFail", password = "TESTTEST", confirmpassword = "TESTTEST", active = true };
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -220,7 +195,7 @@ namespace AlignCareQA
         {
             Data.User user = new Data.User() { username = "Test", password = "TESTTEST123", confirmpassword = "TESTTEST123", active = true };
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -229,32 +204,103 @@ namespace AlignCareQA
 
         }
         [Test]
-        [Category("Login")]
+        [Category("Login"), Category("Rerun Safe")]
         public void LoginInvalidPassword()
         {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            string contactName = Pages.Admin.EditCustomer.GetContactPersonName();
+            string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
+            string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
+            Pages.Admin.MenuBar.SignOut();
             Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
-            Pages.Customer.Login.ValidateInvalidPasswordMessage();
+            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
         }
         [Test]
         [Category("Login"), Category("Rerun Safe")]
         public void LoginDormantAccount()
         {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            string contactName = Pages.Admin.EditCustomer.GetContactPersonName();
+            string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
+            string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
+            Pages.Admin.MenuBar.SignOut();
             Pages.Customer.Login.AttemptLogin("TestDormant", "TESTTEST123");
-            Pages.Customer.Login.ValidateDormantAccountMessage();
+            Pages.Customer.Login.ValidateDormantAccountMessage(contactName, contactPhone, contactEmail);
         }
         [Test]
-        [Category("Login"), Category("Rerun Safe")]
+        [Category("Login"), Category("Rerun Safe"), Category("Unfinished")]
         public void LoginExpiredAccount()
         {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            string contactName = Pages.Admin.EditCustomer.GetContactPersonName();
+            string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
+            string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
+            Pages.Admin.MenuBar.SignOut();
             Pages.Customer.Login.AttemptLogin("TestExpired", "TESTTEST123");
-            Pages.Customer.Login.ValidateExpiredAccountMessage();
+            Pages.Customer.Login.ValidateExpiredAccountMessage(contactName, contactPhone, contactEmail);
+        }
+        [Test]
+        [Category("Login"), Category("Rerun Safe"), Category("Unfinished")]
+        public void Login3FailsLocked()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            string contactName = Pages.Admin.EditCustomer.GetContactPersonName();
+            string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
+            string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
+            Pages.Admin.MenuBar.SignOut();
+            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
+            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
+            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
+            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
+            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
+            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
+            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
+            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
+            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", "TESTTEST123");
+            Pages.Customer.Login.ValidateLockedAccountMessage(contactName, contactPhone, contactEmail);
+            //Have to add teardown to unlock account for next run
         }
         [Test]
         [Category("Login"), Category("Rerun Safe")]
-        public void Login3FailsLocked()
+        public void LoginLockedAccount()
         {
-            Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
-            Pages.Customer.Login.ValidateInvalidPasswordMessage();
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            string contactName = Pages.Admin.EditCustomer.GetContactPersonName();
+            string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
+            string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
+            Pages.Admin.MenuBar.SignOut();
+            Pages.Customer.Login.AttemptLogin("TestLocked", "TESTTEST123");
+            Pages.Customer.Login.ValidateLockedAccountMessage(contactName, contactPhone, contactEmail);
         }
         [Test]
         [Category("Permissions"), Category("Rerun Safe")]
@@ -263,7 +309,7 @@ namespace AlignCareQA
             //Create Saved Search for PrescienceRx and Landing Page Category.
 
             Pages.Customer.Login.LoginWithSuperAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -280,7 +326,7 @@ namespace AlignCareQA
         public void ValidateStaffAdminPermissions()
         {
             Pages.Customer.Login.LoginWithStaffAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
             Pages.Admin.ManageUsers.ClickCreateLink();
@@ -297,7 +343,7 @@ namespace AlignCareQA
         public void ValidateClientAdminPermissions()
         {
             Pages.Customer.Login.LoginWithClientAdmin();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.ManageUsers.ClickCreateLink();
             Pages.Admin.AddUser.ClickBackToListLink();
@@ -312,9 +358,225 @@ namespace AlignCareQA
         public void ValidateUserPermissions()
         {
             Pages.Customer.Login.LoginWithUser();
-            Pages.Customer.MenuBar.ExpandMenu();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ValidateAdminLinkDoesntExist();
 
         }
+        [Test]
+        [Category("LandingPage"), Category("Rerun Safe")]
+        public void CreateBasicLandingPageItem()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.AddLandingPageItem.SetModuleType("Care ");
+            Pages.Admin.AddLandingPageItem.SetPanelType("ActionItem");
+            Pages.Admin.AddLandingPageItem.SetPanelName("Clinical Management Opportunities");
+            Pages.Admin.AddLandingPageItem.SetPanelItemName("Warsaids");
+            Pages.Admin.AddLandingPageItem.SetCustomerName("AlignCare Services, LLC");
+            Pages.Admin.AddLandingPageItem.SetSavedSearch("Nsaids");
+            Pages.Admin.AddLandingPageItem.ClickSaveButton();
+            Pages.Admin.AddLandingPageItem.ValidateLandingPageAddedSuccess();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemExistsByName("Warsaids");
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickEditLandingPage();
+            Pages.Admin.EditLandingPageItem.ClickDeleteByItemName("Warsaids");
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemDoesNotExist("Warsaids");
+        }
+        [Test]
+        [Category("LandingPage"), Category("Rerun Safe")]
+        public void CreateStandardLandingPageItem()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.AddLandingPageItem.SetModuleType("Care ");
+            Pages.Admin.AddLandingPageItem.SetPanelType("ActionItem");
+            Pages.Admin.AddLandingPageItem.SetPanelName("Clinical Management Opportunities");
+            Pages.Admin.AddLandingPageItem.SetPanelItemName("Warsaids");
+            Pages.Admin.AddLandingPageItem.SetStandardCheckbox(true);
+            //Pages.Admin.AddLandingPageItem.SetCustomerName("AlignCare Services, LLC");
+            Pages.Admin.AddLandingPageItem.SetSavedSearch("Nsaids");
+            Pages.Admin.AddLandingPageItem.ClickSaveButton();
+            Pages.Admin.AddLandingPageItem.ValidateLandingPageAddedSuccess();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemExistsByName("Warsaids");
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("Stanford");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemExistsByName("Warsaids");
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickEditLandingPage();
+            Pages.Admin.EditLandingPageItem.ClickDeleteByItemName("Warsaids");
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemDoesNotExist("Warsaids");
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("Stanford");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemDoesNotExist("Warsaids");
+        }
+        [Test]
+        [Category("LandingPage"), Category("Rerun Safe")]
+        public void CreateParentChildLandingPageItem()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.AddLandingPageItem.SetModuleType("Care ");
+            Pages.Admin.AddLandingPageItem.SetPanelType("ActionItem");
+            Pages.Admin.AddLandingPageItem.SetPanelName("Clinical Management Opportunities");
+            Pages.Admin.AddLandingPageItem.SetPanelItemName("Generic Parent");
+            Pages.Admin.AddLandingPageItem.SetCustomerName("AlignCare Services, LLC");
+            Pages.Admin.AddLandingPageItem.SetParentCheckbox(true);
+            Pages.Admin.AddLandingPageItem.ClickSaveButton();
+            Pages.Admin.AddLandingPageItem.ValidateLandingPageAddedSuccess();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.MenuBar.ClickAddLandingPage();
+            Pages.Admin.AddLandingPageItem.SetModuleType("Care ");
+            Pages.Admin.AddLandingPageItem.SetPanelType("ActionItem");
+            Pages.Admin.AddLandingPageItem.SetPanelName("Clinical Management Opportunities");
+            Pages.Admin.AddLandingPageItem.SetPanelItemName("Warsaids");
+            Pages.Admin.AddLandingPageItem.SetCustomerName("AlignCare Services, LLC");
+            Pages.Admin.AddLandingPageItem.SetSavedSearch("Nsaids");
+            Pages.Admin.AddLandingPageItem.SetParentPanelItem("Generic Parent");
+            Pages.Admin.AddLandingPageItem.ClickSaveButton();
+            Pages.Admin.AddLandingPageItem.ValidateLandingPageAddedSuccess();
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemExistsByName("Generic Parent");
+            Pages.Customer.Home.ClickParentLandingPageItemByName("Generic Parent");
+            Pages.Customer.Home.ValidateChildLandingPageItemExistsByName("Generic Parent", "Warsaids");
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.MenuBar.ClickEditLandingPage();
+            Pages.Admin.EditLandingPageItem.ClickDeleteByItemName("Generic Parent");
+            Pages.Admin.MenuBar.ClickManageCustomers();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ValidateParentLandingPageItemDoesNotExist("Generic Parent");
+        }
+        [Test]
+        [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
+        public void DownloadRiskSummaryPatientList()
+        {
+            //Need to validate downloaded file
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.DownloadPatientList();
+        }
+        [Test]
+        [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
+        public void DownloadRiskSummaryHCC()
+        {
+            //Need to validate downloaded file
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.DownloadHCC();
+        }
+        [Test]
+        [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
+        public void DownloadRiskSummaryPDC()
+        {
+            //Need to validate downloaded file
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.DownloadPDC();
+        }
+        [Test]
+        [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
+        public void DownloadAllPatientDetailsReport()
+        {
+            //Need to validate downloaded file
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            string firstresultname = Pages.Customer.Care.GetSearchResultFirstName(1) + " " + Pages.Customer.Care.GetSearchResultLastName(1);
+            Pages.Customer.Care.ClickFirstSearchResult();
+            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            Pages.Customer.AllPatientDetails.ClickReportButton();
+            Pages.Customer.AllPatientDetails.ClickOkToGenerateReport();
+            Pages.Customer.MenuBar.ExpandMessages();
+            Pages.Customer.MenuBar.WaitForReportToGenerateByPatientName(firstresultname);
+            Pages.Customer.MenuBar.DownloadPatientReportByPatientName(firstresultname);
+            Pages.Special.BrowserDownloads.OpenDownloadsPage();
+            string downloadedFile = Pages.Special.BrowserDownloads.GetDownloadFileName();
+            string pdftext = Helpers.PDF.GetTextFromPDF(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+            File.Delete(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+        }
+        [Test]
+        [Category("Navigation"), Category("Rerun Safe")]
+        public void InNetworkDisplayOffDataHidden()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.TurnOffInNetworkDisplay();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickUpdateCustomerButton();
+            Pages.Admin.EditCustomer.VerifySuccessMessage();
+            Pages.Admin.EditCustomer.ClickBackToListLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.ClickFirstSearchResult();
+            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            Pages.Customer.AllPatientDetails.ValidateInNetworkIsHidden();
+        }
+        [Test]
+        [Category("Navigation"), Category("Rerun Safe")]
+        public void InNetworkDisplayOnDataShows()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.TurnOnInNetworkDisplay();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickUpdateCustomerButton();
+            Pages.Admin.EditCustomer.VerifySuccessMessage();
+            Pages.Admin.EditCustomer.ClickBackToListLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            Pages.Customer.Care.ClickFirstSearchResult();
+            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            Pages.Customer.AllPatientDetails.ValidateInNetworkIsDisplayed();
+        }
     }
 }
+

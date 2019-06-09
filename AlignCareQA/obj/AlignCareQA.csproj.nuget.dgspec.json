@@ -43,7 +43,7 @@
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.1.0, )"
+              "version": "[16.1.1, )"
             },
             "Microsoft.NETCore.App": {
               "target": "Package",
@@ -80,7 +80,7 @@
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[74.0.3729.6, )"
+              "version": "[75.0.3770.8, )"
             },
             "Selenium.WebDriver.GeckoDriver.Win64": {
               "target": "Package",
@@ -89,6 +89,14 @@
             "Selenium.WebDriver.MicrosoftDriver": {
               "target": "Package",
               "version": "[17.17134.0, )"
+            },
+            "Syroot.Windows.IO.KnownFolders": {
+              "target": "Package",
+              "version": "[1.2.1, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13, )"
             }
           },
           "imports": [

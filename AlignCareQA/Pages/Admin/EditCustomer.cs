@@ -40,6 +40,12 @@ namespace AlignCareQA.Pages.Admin
 
         //Elastic Search Type
 
+        //Contact Info
+        private static readonly By txtContactPersonFirstName = By.XPath("//div[@id='tab_4']//input[@name='customerId']");
+        private static readonly By txtContactPersonLastName = By.XPath("//div[@id='tab_4']//input[@name='customerName']");
+        private static readonly By txtContactPersonEmail = By.XPath("//div[@id='tab_4']//input[@name='elasticSearchSecurityKey']");
+        private static readonly By txtContactPersonPhone = By.XPath("//div[@id='tab_4']//input[@name='radisCacheURL']");
+
         //Common
         private static readonly By btnNext = By.XPath("//input[@value='Next']");
         private static readonly By btnPrevious = By.XPath("//input[@value='Previous']");
@@ -53,6 +59,14 @@ namespace AlignCareQA.Pages.Admin
         {
             System.Threading.Thread.Sleep(500);
             if (!driver.FindElement(ckbxIsInNetworkDisplay).Selected)
+            {
+                driver.FindElement(ckbxIsInNetworkDisplay).Click();
+            }
+        }
+        public static void TurnOffInNetworkDisplay()
+        {
+            System.Threading.Thread.Sleep(500);
+            if (driver.FindElement(ckbxIsInNetworkDisplay).Selected)
             {
                 driver.FindElement(ckbxIsInNetworkDisplay).Click();
             }
@@ -78,6 +92,20 @@ namespace AlignCareQA.Pages.Admin
         public static void ClickBackToListLink()
         {
             driver.FindElement(lnkBackToList).Click();
+        }
+        public static string GetContactPersonName()
+        {
+            string firstname = driver.FindElement(txtContactPersonFirstName).GetAttribute("value");
+            string lastname = driver.FindElement(txtContactPersonLastName).GetAttribute("value");
+            return firstname + " " + lastname;
+        }
+        public static string GetContactPersonEmail()
+        {
+            return driver.FindElement(txtContactPersonEmail).GetAttribute("value");
+        }
+        public static string GetContactPersonPhone()
+        {
+            return driver.FindElement(txtContactPersonPhone).GetAttribute("value");
         }
     }
 }
