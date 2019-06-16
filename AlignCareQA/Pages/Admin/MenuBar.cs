@@ -63,6 +63,7 @@ namespace AlignCareQA.Pages.Admin
         public static void SignOut()
         {
             driver.FindElement(lnkUserMenu).Click();
+            System.Threading.Thread.Sleep(250);
             driver.FindElement(lnkSignOut).Click();
         }
     }

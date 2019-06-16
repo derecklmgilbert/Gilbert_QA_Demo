@@ -17,6 +17,9 @@ namespace AlignCareQA.Pages.Customer
         private static readonly By lnkPolyprescriber = By.Id("pa");
         private static readonly By lnkViewAllPatientDetails = By.Id("vda");
 
+        //PatientInfo
+        private static readonly By lblPatientName = By.XPath("//p[@class='pname-text']");
+
         private static readonly By tblPopupTable = By.XPath("//div[@class='container menu_in_tbl']/div/table");
 
         public static void MouseOverPolyprescriber()
@@ -39,6 +42,11 @@ namespace AlignCareQA.Pages.Customer
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElement(lnkViewAllPatientDetails).Displayed == true);
             System.Threading.Thread.Sleep(1000);
             driver.FindElement(lnkViewAllPatientDetails).Click();
+        }
+        public static void ValidatePatientName(string expectedName)
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElement(lnkViewAllPatientDetails).Displayed == true);
+            Assert.AreEqual(expectedName, driver.FindElement(lblPatientName).Text);
         }
     }
 }

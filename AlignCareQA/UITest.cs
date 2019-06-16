@@ -11,6 +11,7 @@ using System.IO;
 using Newtonsoft.Json;
 using RestSharp;
 using Syroot.Windows.IO;
+using AlignCareQA.Data;
 
 namespace AlignCareQA
 {
@@ -39,14 +40,6 @@ namespace AlignCareQA
         {
             driver.Quit();
             driver = null;
-            
-
-            //using (StreamWriter file = File.CreateText(@"C:\Users\dereck\Documents\Test\Results.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer();
-            //    //serialize object directly into file stream
-            //    serializer.Serialize(file, new TestRun { tests = allTests });
-            //}
         }
         [TearDown]
         public void SingleTestClean()
@@ -72,49 +65,7 @@ namespace AlignCareQA
         //    {
         //
         //    }
-        //    //Set Comment Info
-        //    //Set Test Data
-        //    if (testData.Count == 0)
-        //    {
-        //        testResultsComment.AppendLine("Please add test data method for this test");
-        //    }
-        //    else
-        //    {
-        //        //Methods for passengers
-        //        testResultsComment.AppendLine(@"||Product Name||Price||Cancellation Date||Cancellation Cost||Passengers||");
-        //        //Add Lines for Each Leg Type
-        //        foreach (HotelLeg leg in testData.Where(x => x.GetType() == typeof(HotelLeg)))
-        //        {
-        //            List<Passenger> Pax = new List<Passenger>();
-        //            foreach (Room x in leg.Rooms)
-        //            {
-        //                foreach (Passenger y in x.Passengers)
-        //                {
-        //                    Pax.Add(y);
-        //                }
-        //            }
-        //            testResultsComment.AppendLine("|" + leg.Name + "|" + leg.BaseCost + "|" + leg.CancellationDate.ToShortDateString() + "|" + leg.CancellationCost + "|" + Pax.Where(x => x.Type == PaxType.Adult).Count().ToString() + " Adults " + Pax.Where(x => x.Type == PaxType.Child).Count().ToString() + " Children" + "|");
-        //        }
-        //        foreach (TransferLeg leg in testData.Where(x => x.GetType() == typeof(TransferLeg)))
-        //        {
-        //            List<Passenger> Pax = new List<Passenger>();
-        //            foreach (Passenger y in leg.Passengers)
-        //            {
-        //                Pax.Add(y);
-        //            }
-        //            testResultsComment.AppendLine("|" + leg.Name + "|" + leg.BaseCost + "|" + leg.CancellationDate.ToShortDateString() + "|" + leg.CancellationCost + "|" + Pax.Where(x => x.Type == PaxType.Adult).Count().ToString() + " Adults " + Pax.Where(x => x.Type == PaxType.Child).Count().ToString() + " Children" + "|");
-        //        }
-        //        foreach (SightseeingLeg leg in testData.Where(x => x.GetType() == typeof(SightseeingLeg)))
-        //        {
-        //            List<Passenger> Pax = new List<Passenger>();
-        //            foreach (Passenger y in leg.Passengers)
-        //            {
-        //                Pax.Add(y);
-        //            }
-        //            testResultsComment.AppendLine("|" + leg.Name + "|" + leg.BaseCost + "|" + leg.CancellationDate.ToShortDateString() + "|" + leg.CancellationCost + "|" + Pax.Where(x => x.Type == PaxType.Adult).Count().ToString() + " Adults " + Pax.Where(x => x.Type == PaxType.Child).Count().ToString() + " Children" + "|");
-        //        }
-        //    }
-        //
+        //    
         //    //Fail Reason
         //    foreach (AssertionResult assert in TestContext.CurrentContext.Result.Assertions)
         //    {
@@ -218,7 +169,7 @@ namespace AlignCareQA
             string contactEmail = Pages.Admin.EditCustomer.GetContactPersonEmail();
             string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
             Pages.Admin.MenuBar.SignOut();
-            Pages.Customer.Login.AttemptLogin("dereck.gilbert@aligncare.com", "TESTTEST123");
+            Pages.Customer.Login.AttemptLogin("StaticTestAdmin", "TESTTEST123");
             Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
         }
         [Test]
@@ -240,7 +191,7 @@ namespace AlignCareQA
             Pages.Customer.Login.ValidateDormantAccountMessage(contactName, contactPhone, contactEmail);
         }
         [Test]
-        [Category("Login"), Category("Rerun Safe"), Category("Unfinished")]
+        [Category("Login"), Category("Rerun Safe")]
         public void LoginExpiredAccount()
         {
             Pages.Customer.Login.LoginWithSuperAdmin();
@@ -255,10 +206,10 @@ namespace AlignCareQA
             string contactPhone = Pages.Admin.EditCustomer.GetContactPersonPhone();
             Pages.Admin.MenuBar.SignOut();
             Pages.Customer.Login.AttemptLogin("TestExpired", "TESTTEST123");
-            Pages.Customer.Login.ValidateExpiredAccountMessage(contactName, contactPhone, contactEmail);
+            Pages.Customer.MustChangePassword.ValidateChangePasswordPageIsOpen("TestExpired");
         }
         [Test]
-        [Category("Login"), Category("Rerun Safe"), Category("Unfinished")]
+        [Category("Login"), Category("Rerun Safe")]
         public void Login3FailsLocked()
         {
             Pages.Customer.Login.LoginWithSuperAdmin();
@@ -278,11 +229,16 @@ namespace AlignCareQA
             Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
             Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
             Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
-            Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", Helpers.Functions.GenerateRandomString(8));
-            Pages.Customer.Login.ValidateInvalidPasswordMessage(contactEmail);
             Pages.Customer.Login.AttemptLogin("TestFailedLoginLock", "TESTTEST123");
             Pages.Customer.Login.ValidateLockedAccountMessage(contactName, contactPhone, contactEmail);
             //Have to add teardown to unlock account for next run
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickManageUsersFromTable("AlignCare Services, LLC");
+            Pages.Admin.ManageUsers.ClickEditUserFromTable("TestFailedLoginLock");
+            Pages.Admin.EditUser.SetLocked(false);
+            Pages.Admin.EditUser.SaveForm();
         }
         [Test]
         [Category("Login"), Category("Rerun Safe")]
@@ -483,6 +439,9 @@ namespace AlignCareQA
             Pages.Customer.Home.ClickRiskProfileSummary();
             Pages.Customer.Care.ClickPatients();
             Pages.Customer.Care.DownloadPatientList();
+            string downloadedFile = Pages.Special.BrowserDownloads.GetDownloadFileName();
+            //string pdftext = Helpers.PDF.GetTextFromPDF(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+            File.Delete(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
         }
         [Test]
         [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
@@ -494,6 +453,9 @@ namespace AlignCareQA
             Pages.Customer.Home.ClickRiskProfileSummary();
             Pages.Customer.Care.ClickPatients();
             Pages.Customer.Care.DownloadHCC();
+            string downloadedFile = Pages.Special.BrowserDownloads.GetDownloadFileName();
+            //string pdftext = Helpers.PDF.GetTextFromPDF(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+            File.Delete(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
         }
         [Test]
         [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
@@ -505,6 +467,24 @@ namespace AlignCareQA
             Pages.Customer.Home.ClickRiskProfileSummary();
             Pages.Customer.Care.ClickPatients();
             Pages.Customer.Care.DownloadPDC();
+            string downloadedFile = Pages.Special.BrowserDownloads.GetDownloadFileName();
+            //string pdftext = Helpers.PDF.GetTextFromPDF(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+            File.Delete(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+        }
+        [Test]
+        [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
+        public void DownloadDrugInteractionD2D()
+        {
+            //Need to validate downloaded file
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.Home.ExpandClinicalManagementOpportunities();
+            Pages.Customer.Home.ClickParentLandingPageItemByName("Drug Interaction Alerts");
+            Pages.Customer.Home.ClickChildLandingPageItemByIndex("Drug Interaction Alerts", 0);
+            Pages.Customer.Care.DownloadD2D();
+            Pages.Special.BrowserDownloads.OpenDownloadsPage();
+            string downloadedFile = Pages.Special.BrowserDownloads.GetDownloadFileName();
+            //string pdftext = Helpers.PDF.GetTextFromPDF(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
+            File.Delete(new KnownFolder(KnownFolderType.Downloads).Path + @"\" + downloadedFile);
         }
         [Test]
         [Category("Downloads"), Category("Rerun Safe"), Category("Unfinished")]
@@ -515,12 +495,17 @@ namespace AlignCareQA
             Pages.Customer.MenuBar.ExpandWaffleMenu();
             Pages.Customer.MenuBar.ClickAdminLink();
             Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.MenuBar.ClearAllMessages();
             Pages.Customer.Home.ExpandRiskProfile();
             Pages.Customer.Home.ClickRiskProfileSummary();
             Pages.Customer.Care.ClickPatients();
             string firstresultname = Pages.Customer.Care.GetSearchResultFirstName(1) + " " + Pages.Customer.Care.GetSearchResultLastName(1);
+            string patientID = Pages.Customer.Care.GetSearchResultID(1);
             Pages.Customer.Care.ClickFirstSearchResult();
+            Pages.Customer.PatientSummary.ValidatePatientName(firstresultname);
             Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            Pages.Customer.AllPatientDetails.ValidatePatientName(firstresultname);
+            Pages.Customer.AllPatientDetails.ValidatePatientID(patientID);
             Pages.Customer.AllPatientDetails.ClickReportButton();
             Pages.Customer.AllPatientDetails.ClickOkToGenerateReport();
             Pages.Customer.MenuBar.ExpandMessages();
@@ -576,6 +561,84 @@ namespace AlignCareQA
             Pages.Customer.Care.ClickFirstSearchResult();
             Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
             Pages.Customer.AllPatientDetails.ValidateInNetworkIsDisplayed();
+        }
+        [Test]
+        [Category("Navigation"), Category("Rerun Safe")]
+        public void AllPatientDetailsNextButtonNavigation()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            Pages.Admin.Home.ClickEditCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.EditCustomer.TurnOnInNetworkDisplay();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickNextButton();
+            Pages.Admin.EditCustomer.ClickUpdateCustomerButton();
+            Pages.Admin.EditCustomer.VerifySuccessMessage();
+            Pages.Admin.EditCustomer.ClickBackToListLink();
+            Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Customer.Home.ExpandRiskProfile();
+            Pages.Customer.Home.ClickRiskProfileSummary();
+            Pages.Customer.Care.ClickPatients();
+            List<string> Patients = new List<string>();
+            for (int x = 1; x < 11; x++)
+            {
+                Patients.Add(Pages.Customer.Care.GetSearchResultFirstName(x) + " " + Pages.Customer.Care.GetSearchResultLastName(x));
+            }
+            Pages.Customer.Care.ClickFirstSearchResult();
+            Pages.Customer.PatientSummary.ClickViewAllPatientDetailsLink();
+            for (int x = 0; x < 10; x++)
+            {
+
+                Pages.Customer.AllPatientDetails.ValidatePatientName(Patients[x]);
+                Pages.Customer.AllPatientDetails.ClickNextButton();
+            }
+        }
+        [Test]
+        [Category("Navigation"), Category("Rerun Safe"), Category("Unfinished")]
+        public void CheckLandingPageCounts()
+        {
+            Pages.Customer.Login.LoginWithSuperAdmin();
+            Pages.Customer.MenuBar.ExpandWaffleMenu();
+            Pages.Customer.MenuBar.ClickAdminLink();
+            //Pages.Admin.Home.ClickSelectCustomerFromTable("AlignCare Services, LLC");
+            Pages.Admin.Home.ClickSelectCustomerFromTable("Stanford");
+            Dictionary<string, List<LandingPageItem>> LandingPageMap = new Dictionary<string, List<LandingPageItem>>();
+            List<string> RiskSummarySections = new List<string>() {
+            "Risk Profile",
+            "Clinical Management Opportunities",
+            "Cost & Revenue Optimization Opportunities",
+            "Client Selected Focus on Cost & Quality Management"
+            };
+            foreach(string s in RiskSummarySections)
+            {
+                LandingPageMap.Add(s, Pages.Customer.Home.GetLandingPageItemsBySectionName(s));
+            }
+            foreach(KeyValuePair<string, List<LandingPageItem>> kvp in LandingPageMap)
+            {
+                Pages.Customer.Home.ExpandSectionByText(kvp.Key);
+                foreach(LandingPageItem l in kvp.Value)
+                {
+                    Pages.Customer.Home.ClickParentLandingPageItemByName(l.Name);
+                    if (l.IsParent)
+                    {
+                        for(int x=0; x< l.Children.Count; x++)
+                        {
+                            Pages.Customer.Home.ClickChildLandingPageItemByIndex(l.Name, x);
+                            Pages.Customer.Care.ClickPatients();
+                            Pages.Customer.Care.ValidateNumberOfResults(l.Children[x].Count, l.Children[x].Name);
+                            Pages.Customer.MenuBar.ClickLandingPageLink();
+                        }
+                    }
+                    else
+                    {
+                        Pages.Customer.Care.ClickPatients();
+                        Pages.Customer.Care.ValidateNumberOfResults(l.Count, l.Name);
+                        Pages.Customer.MenuBar.ClickLandingPageLink();
+                    }
+                }
+            }
         }
     }
 }

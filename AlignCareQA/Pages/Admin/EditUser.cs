@@ -25,6 +25,32 @@ namespace AlignCareQA.Pages.Admin
         private static readonly By ckbxExpired = By.Id("User_IsExpired");
         private static readonly By ckbxLocked = By.Id("User_IsLocked");
         private static readonly By ckbxChangePasswordOnNextLogin = By.Id("User_AdminReset");
-        private static readonly By btnRegister = By.XPath("//input[@value='Register']");
+        private static readonly By btnUpdate = By.XPath("//input[@value='Update']");
+
+        private static readonly By msgErrorMessage = By.Id("divErrorMessage");
+        private static readonly By msgSuccessMessage = By.Id("divSuccessMessage");
+
+        public static void SetLocked(bool set)
+        {
+            if (set)
+            {
+                if (!driver.FindElement(ckbxLocked).Selected)
+                {
+                    driver.FindElement(ckbxLocked).Click();
+                }
+            }
+            else
+            {
+                if (driver.FindElement(ckbxLocked).Selected)
+                {
+                    driver.FindElement(ckbxLocked).Click();
+                }
+            }
+        }
+        public static void SaveForm()
+        {
+            driver.FindElement(btnUpdate).Click();
+            Assert.AreEqual("User has been updated successfully", driver.FindElement(msgSuccessMessage).Text);
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace AlignCareQA.Pages.Customer
         public static void ValidateDormantAccountMessage(string contactName, string contactPhone, string contactEmail)
         {
             Assert.IsTrue(driver.FindElement(msgError).Displayed);
-            Assert.AreEqual("Your Account is dormant due to inactivity please contact " + contactName + " , " + contactPhone + " " + contactEmail + "", driver.FindElement(msgError).Text);
+            Assert.AreEqual("Your Account is dormant due to inactivity Please Contact " + contactName + ", " + contactPhone + ", " + contactEmail + ".", driver.FindElement(msgError).Text);
         }
         public static void ValidateExpiredAccountMessage(string contactName, string contactPhone, string contactEmail)
         {

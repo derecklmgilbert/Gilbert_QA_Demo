@@ -24,6 +24,8 @@ namespace AlignCareQA.Pages.Customer
         private static readonly By btnModalCancel = By.Id("btnCancelModal");
 
         //PatientProfile
+        private static readonly By lblPatientProfileHeader = By.XPath("//div[@id='patientProfile']//div[contains(@class, 'panel-heading')]");
+
         private static readonly By lblOrganizationData = By.XPath("//div[@id='patientProfile']//td[text()='Organization']/../td[2]");
         private static readonly By lblEnrolledData = By.XPath("//div[@id='patientProfile']//td[text()='Enrolled']/../td[2]");
         private static readonly By lblPatientIdData = By.XPath("//div[@id='patientProfile']//td[text()='Patient Id']/../td[2]");
@@ -64,6 +66,11 @@ namespace AlignCareQA.Pages.Customer
 
         //Drug Consumption Detail Section
         private static readonly string drugXpath = "//div[contains(text(), 'Drug Consumption Detail')]/../div/div[@class='ng-scope']";
+        private static void WaitForPageLoad()
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElements(lblOptionalCoverageData).Count > 0);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(lblOptionalCoverageData).Displayed);
+        }
         public static void ClickReportButton()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(btnReport).Displayed);
@@ -77,11 +84,10 @@ namespace AlignCareQA.Pages.Customer
         }
         public static void ValidateInNetworkIsHidden()
         {
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElements(lblOptionalCoverageData).Count > 0);
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(x => x.FindElement(lblOptionalCoverageData).Displayed);
-            Assert.Zero(driver.FindElements(lblNetworkParticipantData).Count);
+            WaitForPageLoad();
+            Assert.False(driver.FindElement(lblNetworkParticipantData).Displayed);
             Assert.False(PrescriberTableNetworkColumnDisplayed());
-            Assert.Zero(driver.FindElements(chrtPrescribers).Count);
+            Assert.False(driver.FindElement(chrtPrescribers).Displayed);
             CheckDrugConsumptionPrescriptionTablesForInNetwork(false);
         }
         public static void ValidateInNetworkIsDisplayed()
@@ -112,6 +118,30 @@ namespace AlignCareQA.Pages.Customer
                 Assert.True(driver.FindElements(By.XPath("//table[@id='tblPrescriptionHistory']"))[i].Displayed);
                 Assert.AreEqual(driver.FindElements(By.XPath("//table[@id='tblPrescriptionHistory']"))[i].FindElement(By.XPath(".//th[text()='In Network']")).Displayed, expectedDisplayed);
             }
+        }
+        public static void ValidatePatientName(string expectedName)
+        {
+            WaitForPageLoad();
+            Assert.AreEqual(expectedName, GetPatientName());
+        }
+        public static void ValidatePatientID(string expectedID)
+        {
+            WaitForPageLoad();
+            Assert.AreEqual(expectedID, GetPatientID());
+            Assert.AreEqual(expectedID, driver.FindElement(lblPatientIdData).Text);
+        }
+        public static string GetPatientName()
+        {
+            return driver.FindElement(lblPatientProfileHeader).Text.Substring(0, driver.FindElement(lblPatientProfileHeader).Text.IndexOf("(") - 1);
+        }
+        public static string GetPatientID()
+        {
+            return driver.FindElement(lblPatientProfileHeader).Text.Substring(driver.FindElement(lblPatientProfileHeader).Text.IndexOf("(") + 1, driver.FindElement(lblPatientProfileHeader).Text.Length - driver.FindElement(lblPatientProfileHeader).Text.IndexOf("(")-2);
+        }
+        public static void ClickNextButton()
+        {
+            driver.FindElement(btnNext).Click();
+            System.Threading.Thread.Sleep(500);
         }
     }
 }
