@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlignCareQA.Helpers
+namespace TestDemo.Helpers
 {
     class Functions
     {

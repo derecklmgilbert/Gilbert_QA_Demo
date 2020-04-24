@@ -1,34 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dereck.gilbert\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {}
+    "C:\\Users\\thecz\\PycharmProjects\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dereck.gilbert\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {
+    "C:\\Users\\thecz\\PycharmProjects\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dereck.gilbert\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
-        "projectName": "AlignCareQA",
-        "projectPath": "C:\\Users\\dereck.gilbert\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
-        "packagesPath": "C:\\Users\\dereck.gilbert\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dereck.gilbert\\Documents\\GitHub\\AlignCareQA\\AlignCareQA\\obj\\",
+        "projectUniqueName": "C:\\Users\\thecz\\PycharmProjects\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+        "projectName": "TestDemo",
+        "projectPath": "C:\\Users\\thecz\\PycharmProjects\\AlignCareQA\\AlignCareQA\\AlignCareQA.csproj",
+        "packagesPath": "C:\\Users\\thecz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thecz\\PycharmProjects\\AlignCareQA\\AlignCareQA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\dereck.gilbert\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\thecz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "netcoreapp3.1": {
             "projectReferences": {}
           }
         },
@@ -39,16 +41,11 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "netcoreapp3.1": {
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.1.1, )"
-            },
-            "Microsoft.NETCore.App": {
-              "target": "Package",
-              "version": "[2.1.0, )",
-              "autoReferenced": true
+              "version": "[16.6.0, )"
             },
             "NUnit": {
               "target": "Package",
@@ -56,19 +53,21 @@
             },
             "NUnit.Console": {
               "target": "Package",
-              "version": "[3.10.0, )"
+              "version": "[3.11.1, )"
             },
             "NUnit3TestAdapter": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[3.13.0, )"
+              "version": "[3.16.1, )"
             },
             "RestSharp": {
               "target": "Package",
-              "version": "[106.6.9, )"
+              "version": "[106.10.1, )"
             },
             "Selenium.Firefox.WebDriver": {
               "target": "Package",
-              "version": "[0.24.0, )"
+              "version": "[0.26.0, )"
             },
             "Selenium.Support": {
               "target": "Package",
@@ -80,30 +79,33 @@
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[75.0.3770.8, )"
+              "version": "[81.0.4044.6900, )"
             },
             "Selenium.WebDriver.GeckoDriver.Win64": {
               "target": "Package",
-              "version": "[0.24.0, )"
+              "version": "[0.26.0, )"
             },
             "Selenium.WebDriver.MicrosoftDriver": {
               "target": "Package",
               "version": "[17.17134.0, )"
-            },
-            "Syroot.Windows.IO.KnownFolders": {
-              "target": "Package",
-              "version": "[1.2.1, )"
-            },
-            "iTextSharp": {
-              "target": "Package",
-              "version": "[5.5.13, )"
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
